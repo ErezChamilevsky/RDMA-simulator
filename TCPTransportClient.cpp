@@ -10,13 +10,14 @@
 #include <sys/stat.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <chrono>
 
 class TCPTransportClient : public DTransport{
     private:
         int clientSocket = -1;
 
     public:
-        void Init()
+        void init()
         {
             clientSocket = socket(AF_INET, SOCK_STREAM, 0);
             if (clientSocket < 0)
@@ -45,7 +46,7 @@ class TCPTransportClient : public DTransport{
             }
         }
 
-        void Send()
+        void send()
         {
             if (clientSocket < 0)
                 return;
@@ -81,7 +82,7 @@ class TCPTransportClient : public DTransport{
             close(file_fd);
         }
 
-        int Recieve()
+        int recieve()
         {
             if (clientSocket < 0)
                 return -1;
@@ -104,7 +105,7 @@ class TCPTransportClient : public DTransport{
             return bytesRead < 0 ? -1 : 1;
         }
 
-        void Close()
+        void transportClose()
         {
             if (clientSocket >= 0)
             {
@@ -116,9 +117,20 @@ class TCPTransportClient : public DTransport{
 
 int main(){
     TCPTransportClient client;
-    client.Init();
-    client.Recieve();
-    client.Close();
+    client.init();
+
+    auto start = std::chrono::high_resolution_clock::now();
+
+    client.recieve();
+
+    auto end = std::chrono::high_resolution_clock::now();
+
+
+    client.transportClose();
+
+    std::chrono::duration<double, std::milli> elapsed = end - start;
+
+    std::cout << "TCP clock time: " << elapsed.count() << " ms\n";
 
     return 1;
 

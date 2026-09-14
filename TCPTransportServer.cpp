@@ -18,7 +18,7 @@ private:
 public:
     TCPTransportServer() : serverSocket(-1), clientSocket(-1) {}
 
-    void Init()
+    void init()
     {
         serverSocket = socket(AF_INET, SOCK_STREAM, 0);
         if (serverSocket < 0)
@@ -55,7 +55,7 @@ public:
         }
     }
 
-    void AcceptClient()
+    void acceptClient()
     {
         if (serverSocket < 0)
             return;
@@ -66,7 +66,7 @@ public:
         }
     }
 
-    void Send()
+    void send()
     {
         if (clientSocket < 0)
             return;
@@ -102,7 +102,7 @@ public:
         close(file_fd);
     }
 
-    int Recieve()
+    int recieve()
     {
         if (clientSocket < 0)
             return -1;
@@ -125,7 +125,7 @@ public:
         return bytesRead < 0 ? -1 : 1;
     }
 
-    void Close()
+    void transportClose()
     {
         if (clientSocket >= 0)
         {
@@ -143,10 +143,10 @@ public:
 
 int main(){
     TCPTransportServer server;
-    server.Init();
-    server.AcceptClient();
-    server.Send();
+    server.init();
+    server.acceptClient();
+    server.send();
 
-    server.Close();
+    server.transportClose();
     return 1;
 }
