@@ -12,7 +12,8 @@ write and test real RDMA applications over standard, non-RDMA Ethernet network c
 
 There are two methods that are been checkd - simple tcp connection, and mmap (that simulates the RDMA since there is no regular internet transfer). The simulate itself is not 
 perfect as said above. The results also can reveal it:
-[https://raw.githubusercontent.com/ErezChamilevsky/RDMA-simulator/refs/heads/main/results.png]
+
+![Photo](https://raw.githubusercontent.com/ErezChamilevsky/RDMA-simulator/refs/heads/main/results.png)
 
 ## Implementation
 
